@@ -1,0 +1,3 @@
+allow user to edit ChunkResolution? No.
+
+Can't remember what I wanted to do with this section...
