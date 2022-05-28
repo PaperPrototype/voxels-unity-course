@@ -12,6 +12,10 @@ As a teaser here is a video of what you will have built by the end of this cours
 
 ![TODO]()
 
+(Since that video doesn't exist yet here is a screenshot of the farthest progress I've gotten)
+
+![](/Assets/chunk_water_final.png)
+
 And finally if you want to help contribute to this course you can make a pull request to the [voxels-unity course github repository](https://github.com/PaperPrototype/voxels-unity-course).
 
 Lets get on with it!
