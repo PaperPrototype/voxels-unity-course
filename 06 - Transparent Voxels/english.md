@@ -6,3 +6,5 @@ TODO
 
 - layers decide if their voxels will get a collision mesh or not?
 	- by consequence each layer will have its own gameObject/layer per chunk
+
+![](/Assets/chunk_water_final.png)
