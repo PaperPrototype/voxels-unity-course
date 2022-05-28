@@ -12,4 +12,6 @@ As a teaser here is a video of what you will have built by the end of this cours
 
 ![TODO]()
 
+And finally if you want to help contribute to this course you can make a pull request to the [voxels-unity course github repository](https://github.com/PaperPrototype/voxels-unity-course).
+
 Lets get on with it!
