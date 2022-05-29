@@ -281,12 +281,14 @@ In our diagram it would look like this:
 
 ![](/Assets/2D_voxel_terrain_flat_optimized.png)
 
+The red top are the quads we decided to addd to the mesh. And the greyed out is the quads we decided not to add to the mesh.
+
 # Noisy Terrain
 Alrighty, we have the optimization in place. Now lets upgrade to "noise" to have more interesting terrain.
 
-What is noise? To put it simply, it is a smoothed random-like number, that given a "seed" will always give back the same "wave" of numbers. So the "random" part comes from that fact that each seed gives a unique wave.
+What is noise? To put it simply, it is a smoothed random-like number, that given a "seed" will always give back the same "wave". We are getting a "height" number along the wave and using it for our terrain. Each seed produces unique waves.
 
-We call this behaviour "pseudo-random", because when you access the noise at a certain X and Y, you will get the same number every time (given the seed hasn't changed).
+We call this "pseudo-random" because if you access the noise at a certain X or Y, you will get the same number every time (given the seed hasn't changed)! It will make more sense once we use noise and see the results.
 
 In the course menu download the file called "FastNoiseLite.zip" into your unity project. Unzip the file. Now we can use Jordan Peck's awesome noise library.
 
@@ -306,6 +308,8 @@ Open the Chunk.cs script and add the following:
 
 	//...
 ```
+
+(PST: you can change the default seed by changing the code to `FastNoiseLite(13123)`, 13123 would be the new seed. I recommend keeping the same seed until you finish this lecture. Once you finish the lecture you can experiment)
 
 Now under `IsSolid` add the following method:
 
@@ -333,7 +337,7 @@ Now under `IsSolid` add the following method:
 
 I get some noise, but the noise is given in the range of -1 to 1. We do a bunch of math until we get a range of floorHeight to maxHeight. I did my best to illustrate the math with comments, and it really isn't complicated at all.
 
-With this awesome method you can now edit the `IsSolid` function to the following:
+With this awesome method you can now edit the `IsSolid` method to the following:
 
 ```cs
 	//...
@@ -366,7 +370,7 @@ We are drawing as if we would have neighboring chunks, and this is perfect!... e
 
 ![](/Assets/2D_noise_voxel_terrain_no_neighbors.png)
 
-To do this, all we have to do is update the IsSolid function to return `false` (air) if the neighbor voxel we are checking is outside of the chunk.
+To do this, all we have to do is update the `IsSolid` method to return `false` (air) if the neighbor voxel we are checking is outside of the chunk.
 
 Add the following to `IsSolid`:
 
