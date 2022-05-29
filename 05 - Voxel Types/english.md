@@ -1,4 +1,4 @@
-The last lecture we used noise to figure out where we want and don't want voxels to be. In this lecture we will switch to using noise to help us decide what *type* of voxels we want!
+The last lecture we used noise to figure out where we want and don't want voxels to be. In this lecture we will decide what *type* of voxels we want!
 
 In the end we will have the following:
 
