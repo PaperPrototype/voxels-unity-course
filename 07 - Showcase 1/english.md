@@ -31,6 +31,7 @@ You must at least add 1 of the following features or your own feature (that is n
 	- (if you're thinking "why didn't we do that for water?" Think again. I'll give you a hint: water blocks wouldn't optimize with eachother, and wouldn't be transparent).
 - edit, or make your own, texture atlas!
 - instantiate a gameObject prefab instead of creating a voxel (add a `usePrefab` variable in each voxel type, as well as a GameObject `prefab` variable).
+- Use noise and create different a different looking terrain! (you must at least make 2 different terrains if you choose this)
 
 You can look at what other students have made in the course's posts (click the post icon next to the chat icon) and get inspiration. If you get stuck just jump right in to the live chat and ask for help from me!
 
