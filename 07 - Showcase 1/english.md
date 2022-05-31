@@ -1,8 +1,8 @@
 Its showcase time! 
 
-At the bottom of the page there is a "New Showcase Post" button.
+At the bottom of the page there is a "New Showcase Post" button. Use that to make a new showcase post... but first things first you need a screenshot or youtube video for your post!
 
-First thing;s first you need a screenshot or youtube video for your post. If you have a youtube video you can embed it into your post by doing the following:
+If you have a youtube video you can embed it into your post by doing the following:
 
 ```
 ![](https://www.youtube.com/watch?v=iw8U47Nz2TA)
@@ -12,7 +12,7 @@ Which would give:
 
 ![](https://www.youtube.com/watch?v=iw8U47Nz2TA)
 
-If you have a picture, yu can uplaod it to imgur.com (or really any site), and then paste the image link like this:
+If you have a picture you can upload it to imgur.com (or really any site), and then paste the image link like this:
 
 ```
 ![](https://pbs.twimg.com/media/FT0AuTZWAAEgQHU?format=jpg&name=medium)
@@ -22,18 +22,20 @@ Which would give:
 
 ![](https://pbs.twimg.com/media/FT0AuTZWAAEgQHU?format=jpg&name=medium)
 
-You have a challenge! DON DON DON. Yes this is very serious.
+# Final Challenge
+You also have a challenge!
 
-The challenge is... you must at least add 1 feature that is not from the course to the voxel terrain. Here are some ideas:
+You must at least add 1 of the following features or your own feature (that is not from the course).
 - add another transparent voxel type
-- make a new property in the VoxelType.cs script called "shouldDraw", then you can make voxels "not solid" while still drawing their meshes (if your thinking why didn't we do that for water? Think again. I give you a hint: water blocks won't optimize with eachother, and won't be transparent).
+- make a new property in the VoxelType.cs script called "shouldDraw", then you can make voxels "not solid" while still drawing their meshes 
+	- (if you're thinking "why didn't we do that for water?" Think again. I'll give you a hint: water blocks wouldn't optimize with eachother, and wouldn't be transparent).
 - edit, or make your own, texture atlas!
-- instantiate a gameObject prefab instead of meshing a voxel and have a `usePrefab` check in each voxel type.
+- instantiate a gameObject prefab instead of creating a voxel (add a `usePrefab` variable in each voxel type, as well as a GameObject `prefab` variable).
 
-There is definitely more ideas I haven't listed. You can also look at what other students made and get inspiration from them. Or if you are having trouble, jump in on the live chat and ask other poeple what they think!
+You can look at what other students have made in the course's posts (click the post icon next to the chat icon) and get inspiration. If you get stuck just jump right in to the live chat and ask for help from me!
 
-Remember the more you experiment and the more you push yourself the better you will become! Although start with something simple that you know you can do, so you don't feel discoraged.
+Remember the more you experiment and the more you push yourself the better you will become! If you plan on doing multiple features, start with a very simple one that you know you can implement, so you don't feel discouraged.
 
 Once you add your own feature, make a new showcase post and tell us what new feature you added. You can also record a video of yourself explaining the new feature and show off what you made!
 
-Posts with a screenshot or video will be included in the "student work" section on the course's landing page!
+(PS: Posts with a screenshot or video will be included in the "student work" section on the course's landing page!)

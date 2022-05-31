@@ -9,11 +9,11 @@ In Unity Hub make sure to download Unity 2021.3.1f1 or later since that is what 
 
 As a teaser here is a video of what you will have built by the end of this course.
 
-![TODO]()
+![](https://www.youtube.com/watch?v=mtTOGeAKdGI)
 
 (Since that video doesn't exist yet here is a screenshot)
 
-![](/Assets/chunk_water_final.png)
+![](/Assets/transparent_voxels_result2.png)
 
 And finally if you want to help contribute to this course you can make a pull request to the [voxels-unity-course](https://github.com/PaperPrototype/voxels-unity-course) github repository.
 
