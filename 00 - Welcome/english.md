@@ -7,11 +7,7 @@ If you ever get stuck there is a live chat where you can get help from me or oth
 
 In Unity Hub make sure to download Unity 2021.3.1f1 or later since that is what this course will be using.
 
-As a teaser here is a video of what you will have built by the end of this course.
-
-![](https://www.youtube.com/watch?v=mtTOGeAKdGI)
-
-(Since that video doesn't exist yet here is a screenshot)
+Here is a teaser screenshot of what you will have built by the end of this course.
 
 ![](/Assets/transparent_voxels_result2.png)
 
