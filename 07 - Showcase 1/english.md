@@ -12,7 +12,7 @@ Which would give:
 
 ![](https://www.youtube.com/watch?v=iw8U47Nz2TA)
 
-If you have a picture you can upload it to imgur.com (or really any site), and then paste the image link like this:
+If you have a picture you can upload it to imgur.com (twitter is also a good option), and then paste the image link like this:
 
 ```
 ![](https://pbs.twimg.com/media/FT0AuTZWAAEgQHU?format=jpg&name=medium)
@@ -23,7 +23,7 @@ Which would give:
 ![](https://pbs.twimg.com/media/FT0AuTZWAAEgQHU?format=jpg&name=medium)
 
 # Challenge
-You also have to complete a challenge!
+You also have a challenge to complete!
 
 You must at least add 1 of the following features or your own feature (that is not from the course).
 - add another transparent voxel type

@@ -133,7 +133,7 @@ Now remove the `TODO` comment and replace it with the following code.
             vertexOffset += 4;
 ```
 
-We use the `vertexOffset` as an offset to know where in the vertices array to place the vertices for the current quad. We then increase the `vertexOffset` after adding the vertices, so that the next loop will add vertices at the correct offset.
+We use the `vertexOffset` as an offset to know where in the vertices array to place the vertices for the current quad. We then increase the `vertexOffset` after adding the vertices, so that the next loop will add vertices at the correct offset for the next quad.
 
 When we are offsetting into the `Tables.QuadVertices` with the `side` variable (the first offset slot has the `side` variable in it), we are accessing the quads vertex index for that specific side:
 

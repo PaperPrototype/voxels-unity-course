@@ -4,7 +4,7 @@ The last lecture gave us water colored blocks. The only problem is that water is
 
 We are going to have 2 separate meshes, each with their own material which (in the end) will give us the following (awesome!) looking terrain
 
-![](/Assets/chunk_water_final.png)
+![](/Assets/transparent_voxels_result2.png)
 
 # Layers
 Instead of storing the mesh data for both meshes in the Chunk.cs script, we are going to make a "layer" system. Each layer will have its own mesh and material. Each layer will also get its own gameObject.
