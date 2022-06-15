@@ -335,7 +335,7 @@ Now under `IsSolid` add the following method:
 	//...
 ```
 
-I get some noise, but the noise is given in the range of -1 to 1. We do a bunch of math until we get a range of floorHeight to maxHeight. I did my best to illustrate the math with comments, and it really isn't complicated at all.
+We sample some noise. The noise starts out in the range of -1 to 1. We do a bunch of math until we get a range of `floorHeight` to `maxHeight`. I did my best to illustrate the math with comments, and it really isn't complicated at all.
 
 With this awesome method you can now edit the `IsSolid` method to the following:
 
@@ -357,7 +357,7 @@ With this awesome method you can now edit the `IsSolid` method to the following:
 	//...
 ```
 
-And now if you click play you should see some awesome terrain!
+And now if you click play you should see some terrain!
 
 ![chunk_noise_optimized.png](/Assets/chunk_noise_optimized.png)
 
@@ -393,3 +393,55 @@ Add the following to `IsSolid`:
 Now click play and you should see our beautiful chunk! With its bottom and sides on :P
 
 ![](/Assets/chunk_no_neighbors.png)
+
+# Caves?
+Really quickly if you want to make some caves we will need to make a `GetCavesNoise` method. Under `GetNoiseHeight` add the following method:
+
+```cs
+    // gives numbers in range of 0 to 1
+    public float GetNoiseCaves(float scale, int x, int y, int z)
+    {
+        return (
+                noise.GetNoise(x * scale, y * scale, z * scale) // range -1 to 1
+                + 1                                             // range 0  to 2
+            ) / 2;                                              // range 0  to 1
+    }
+```
+
+And now if you want caves you can change `GetVoxelType` to the following:
+
+```cs
+    private VoxelType GetVoxelType(int x, int y, int z)
+    {
+        float caves = GetNoiseCaves(5f, x, y, z);
+
+        try
+        {
+            if (caves > 0.3)
+            {
+                return voxelTypes[1]; // dirt
+            }
+
+            return voxelTypes[0]; // air
+        }
+        catch
+        {
+            Debug.LogError("That voxel type does not exist. You are offsetting outside of the voxelTypes array.");
+
+            // give back new VoxelType (will use defaults we set in the VoxelType class)
+            return new VoxelType();
+        }
+    }
+```
+
+Which will yield the following:
+
+![](/Assets/noise_caves.png)
+
+(the dirt texture looks different because I took this screenshot after I completed the Voxel Types section)
+
+You and also invert the `if` statement to get floating islands!
+
+![](/Assets/noise_caves_inverted.png)
+
+I had to add an extra Directional Light to the scene to improve the lighting for that screenshot so don't be disapointed if yours doesnt come out as cool, you just need to add some more lights to your scene. I also set the camera background to solid color (instead of skybox), and set the color to black.
