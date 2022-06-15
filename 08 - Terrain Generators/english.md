@@ -1,6 +1,8 @@
 Currently if we want to change how the terrain looks we have to update the `GetVoxelType` method. We also may need to update the `voxelTypes` in the inspector. But the worst part? Each time we update the `GetVoxelType` method to make a new terrain, we lose the old one!
 
-This lecture is going to make our code more *reusable*. Basically we will be able to create a new "terrain script" that has its own `GetVoxelType` method drag and drop that into our `Chunk` script, and vuala! New terrain! Want the old terrain? Just drag and drop that terrain into the `Chunk` script!
+This lecture is going to make our code more *reusable*. 
+
+Basically we will be able to create a new "terrain script" that has its own `GetVoxelType` method, drag and drop that new "terrain script" into our `Chunk`, and vuala! New terrain!... Not enough for you?! Make a new "terrain script", drag and drop *it* into the chunk, and Vuala! New terrain!!!
 
 # Reusable?
 Lets look at the variables and constants. I'm not talking about a *variable* as in a variable in code, I mean theorically if we make a new terrain, what will stay the same in our code (and the inspector), and what will change?
