@@ -2,7 +2,18 @@ Currently if we want to change how the terrain looks we have to update the `GetV
 
 This lecture is going to make our code more *reusable*. 
 
-Basically we will be able to create a new "terrain script" that has its own `GetVoxelType` method, drag and drop that new "terrain script" into our `Chunk`, and vuala! New terrain!... Not enough for you?! Make a new "terrain script", drag and drop *it* into the chunk, and Vuala! New terrain!!!
+Basically we will be able to create a new "terrain generator" that has its own `GetVoxelType` method, drag and drop that new "terrain generator" into our `Chunk`, and vuala! New terrain!... Not enough for you?! Make a new "terrain generator", drag and drop *it* into the chunk, and Vuala! New terrain!!!
+
+Here is some of the terrains I built with this system:
+
+(beach)
+![](/Assets/terrain_generator_beach.png)
+
+(rock floating islands)
+![](/Assets/terrain_generator_rock_floating_islands.png)
+
+(caves)
+![](/Assets/terrain_generator_caves_solo.png)
 
 # Reusable?
 Lets look at the variables and constants. I'm not talking about a *variable* as in a variable in code, I mean theorically if we make a new terrain, what will stay the same in our code (and the inspector), and what will change?
