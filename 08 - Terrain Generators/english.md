@@ -15,6 +15,9 @@ Here is some of the terrains I built with this system:
 (caves)
 ![](/Assets/terrain_generator_caves_solo.png)
 
+(dirt floating islands)
+![](/Assets/terrain_generator_dirt_floating_islands.png)
+
 # Reusable?
 Lets look at the variables and constants. I'm not talking about a *variable* as in a variable in code, I mean theorically if we make a new terrain, what will stay the same in our code (and the inspector), and what will change?
 
