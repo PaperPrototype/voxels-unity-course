@@ -9,7 +9,7 @@ In Unity Hub make sure to download Unity 2021.3.1f1 or later since that is what 
 
 Here is a teaser screenshot of what you will have built by the end of this course.
 
-![](/Assets/transparent_voxels_result2.png)
+![](/Assets/terrain_generator_beach.png)
 
 And finally if you want to help contribute to this course you can make a pull request to the [voxels-unity-course](https://github.com/PaperPrototype/voxels-unity-course) github repository.
 
