@@ -350,3 +350,14 @@ And click play to see our caves!
 ![](/Assets/terrain_generator_caves.png)
 
 Pretty cool eh? Go ahead and make a few different terrains!
+
+Also, rename the "TerrainGenerator" gameobject to "CavesGenerator" since it has our `CavesGenerator` script attatched to it.
+
+# Teacher Showcase
+Who said only students could showcase their work?! Not me!
+
+I created a new `BeachGenerator` script (added it to a new gameobject called `BeachGenerator`) then dragged and dropped it into the "Terrain Generator" slot in the `Chunk` script! And Vuala! Beaches!
+
+![](/Assets/terrain_generator_beach_generator.png)
+
+(PS: I also added a "rock" texture to the atlas, and created a rock voxel type for the beach terrain)
