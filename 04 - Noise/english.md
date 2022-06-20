@@ -87,7 +87,7 @@ public static class Tables
         new int3( 1,  0,  0), // right
         new int3(-1,  0,  0), // left
         new int3( 0,  1,  0), // up
-        new int3( 1, -1,  0), // down
+        new int3( 0, -1,  0), // down
         new int3( 0,  0,  1), // front
         new int3( 0,  0, -1), // back
     };

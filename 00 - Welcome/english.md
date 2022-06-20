@@ -14,6 +14,6 @@ Here is a teaser screenshot of what you will have built by the end of this cours
 And finally if you want to help contribute to this course you can make a pull request to the [voxels-unity-course](https://github.com/PaperPrototype/voxels-unity-course) github repository.
 
 # Setup
-Make a new Project in Unity Hub and name it "voxels-unity". Thats all the setup we have for you.
+Make a new Project in Unity Hub and name it "voxels-unity". Thats all the setup I have for you.
 
 See you in the next lecture!
