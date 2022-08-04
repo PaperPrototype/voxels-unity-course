@@ -4,7 +4,7 @@ Its time to say our farewells...
 
 Farewell good student. I'll miss you.
 
-Though, there is one last thing you must do before you leave.
+Although there is one last thing you must do before you leave.
 
 Since you can now create different terrains using the fancy `TerrainGenerator` class, your challenge is to create 2 new terrains and then make a post with screenshots of them (you can also include code if you want to).
 
