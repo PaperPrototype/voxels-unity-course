@@ -200,13 +200,14 @@ It is a pretty big function, but it is no different that what `MeshVoxel` is cur
     {
         Vector3 offsetPos = new Vector3(x, y, z);
 
-        var voxelType = GetVoxelType(x, y, z); // add this
+        // add this
+        var voxelType = GetVoxelType(x, y, z);
 
         for (int side = 0; side < 6; side++)
         {
             if (!IsNeighborSolid(x, y, z, side))
             {
-                // and this
+                // add this
                 try
                 {
                     layers[voxelType.layer].MeshQuad(offsetPos, voxelType, side);
@@ -301,33 +302,31 @@ First create a new material exaclty the same as the Atlas material (you can just
 
 ![](/Assets/transparent_voxels_material.png)
 
-Create 2 new layers.
+Create 2 new layers on our Chunk gameObject;
 
 ![](/Assets/transparent_voxels_layers.png)
 
-The first layer should use the regular Atlas material, and the second should use the transparent material.
+Make sure to update the Atlas Size and Material of each layer!
 
-Update the water VoxelType layer to 1 (which will offset by 1 and get us the second layer):
+Update the water voxel type to use layer 1 (which will offset by 1 and get us the second layer):
 
 ![](/Assets/transparent_voxels_water_layer_1.png)
-
-Make sure to set the Atlas Size of each layer to 4!
 
 And now you should have a nice mesh with transparent water!
 
 ![](/Assets/transparent_voxels_result1.png)
 
-...wait, something wrong. It's pretty obvious, but layers are optimizing with eachother! Thats not what we want!
+...wait, something went wrong! It's pretty obvious, but layers are optimizing with eachother, so we are not seeing dirt underneath the transparent water! Thats not what we want!
 
 # Layers are not solid to eachother
-We can fix this by making layers not be solid with other layers.
+We can fix this by making layers not be solid with other layers. That way the dirt and water voxel types will not optimize with eachother.
 
 We just need to update the `IsNeighborSolid` method to the following:
 
 ```cs
 	//...
 
-	private bool IsNeighborSolid(int x, int y, int z, int side, TestVoxelType5 selfVoxelType)
+	private bool IsNeighborSolid(int x, int y, int z, int side, VoxelType selfVoxelType)
     {
         int3 offset = Tables.NeighborOffsets[side];
 
@@ -375,6 +374,19 @@ And then we also need to update the `MeshVoxel` method to use our new `IsNeighbo
 	//...
 ```
 
-And vuala!
+Click play and vuala!?
+
+![](/Assets/transparent_voxels_result1.5.png)
+
+Our transparent material is not transparent? This is because we have to update the "alpha" channel to be 50%. Open the transparent material, click on the albedo property to upen the color picker and update its alpha channel to be 50.
+
+![](/Assets/material_fix_transparent_alpha.png)
+
+Alpha is how "visible" a material is. If the alpha is 100% then we can see it, if its 0 then its invisible. 
+
+With those changes click play to see transparent water!
 
 ![](/Assets/transparent_voxels_result2.png)
+
+# Final touches
+Update the Chunk.cs script to not force unity to add a `MeshFilter` and `MeshRenderer`, and then remove the meshFilter and MeshRenderer from the chunk since the layers are now creating gameObjects for each layer and adding the correct components to them.

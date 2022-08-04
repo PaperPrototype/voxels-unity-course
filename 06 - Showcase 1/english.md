@@ -21,3 +21,5 @@ If you have a picture you can upload it to imgur.com (twitter is also a good opt
 Which will give the following:
 
 ![](https://pbs.twimg.com/media/FT0AuTZWAAEgQHU?format=jpg&name=medium)
+
+Alrighty! Now go click that "New Showcase Post" button!

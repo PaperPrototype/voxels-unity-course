@@ -1,15 +1,15 @@
-Currently if we want to change how the terrain looks we have to update the `GetVoxelType` method. We also may need to update the `voxelTypes` in the inspector. But the worst part? Each time we update the `GetVoxelType` method to make a new terrain, we lose the old one!
+Currently if we want to change how the terrain looks we have to update the `GetVoxelType` method. We also may need to update the `voxelTypes` in the inspector. But the worst part? Each time we update the `GetVoxelType` method we lose any previous terrains we've made!
 
-This lecture is going to make our code more *reusable*. 
+This lecture is going to make our code more *reusable* so that we can make "terrain generators" each with their own VoxelTypes and GetVoxelType method!
 
-Basically we will be able to create a new "terrain generator" that has its own `GetVoxelType` method, drag and drop that new "terrain generator" into our `Chunk`, and vuala! New terrain!... Not enough for you?! Make a new "terrain generator", drag and drop *it* into the chunk, and Vuala! New terrain!!!
+Basically we will be able to drag and drop a new "terrain generator" into our `Chunk`, and vuala! New terrain!... Not enough for you?! Make a new "terrain generator", drag and drop *it* into the chunk, and Vuala!!! New terrain!!! Muahahah... uhh ehm. Right.
 
-Here is some of the terrains I built with this system:
+So. Here is some of the terrains I built with this system:
 
 (beach)
 ![](/Assets/terrain_generator_beach.png)
 
-(rock floating islands)
+(rock floating islands, I added a rock type to the atlas texture)
 ![](/Assets/terrain_generator_rock_floating_islands.png)
 
 (caves)
@@ -39,7 +39,7 @@ using UnityEngine;
 
 public class TerrainGenerator : MonoBehaviour
 {
-    public int ChunkResolution = 16;
+    public int ChunkResolution = 32;
     public int Seed = 1337;
 
     public VoxelType[] VoxelTypes;
@@ -94,7 +94,7 @@ public class TerrainGenerator : MonoBehaviour
 }
 ```
 
-Now lets update the Chunk.cs script and remove the layers and voxel types and noise (phew), and switch to using the ones from our `TerrainGenerator`:
+Now lets update the Chunk.cs script and remove the layers and voxel types and noise (hehe), and switch to **using the ones from our**... `TerrainGenerator`!
 
 ```cs
 using UnityEngine;
@@ -110,6 +110,7 @@ public class Chunk : MonoBehaviour
         // initialize layers
         // TODO
 
+        // UPDATE THIS to use terrainGenerator.ChunkResolution
         for (int x = 0; x < terrainGenerator.ChunkResolution; x++)
         {
             for (int y = 0; y < terrainGenerator.ChunkResolution; y++)
@@ -210,7 +211,7 @@ Our Chunk.cs script is very broken right now and we need to fix it!
 
 Start by deleting the `GetVoxelType` and `GetNoiseHeight` and `GetNoiseCaves` methods since they are no longer needed, and are now in the `TerrainGenerator` script.
 
-We also broke the `MeshVoxel` and `IsNeighborSolid` and `IsSolid` methods, so we need to fix them to use our `TerrainGenerator` (we basically just have to add a `terrainGenerator.` in front of everything that is broken):
+We also broke the `MeshVoxel` and `IsNeighborSolid` and `IsSolid` methods, so we need to fix them to use our `TerrainGenerator` (we basically just have to add a `terrainGenerator.ThingToFix` in front of everything that is broken):
 
 ```cs
 using UnityEngine;
@@ -279,7 +280,7 @@ public class Chunk : MonoBehaviour
 
 That was a lot of code to update and move around! 
 
-We separated all the code for generating different terrains into its own script called `TerrainGenerator` that the `Chunk` script uses when creating terrain:
+We separated all the *variables* (things that change with each new terrain) into a script called `TerrainGenerator` and the `Chunk` script uses it when creating terrain:
 
 ![](/Assets/terrain_generator_code_diagram.png)
 
@@ -298,7 +299,9 @@ Now just set up the voxel types and layers needed by `GetVoxelType` and run this
 TADA!
 
 # Abstract Classes
-But there is 1 problem. We still are stuck with 1 single version of `GetVoxelType`! And we will lose any old versions of it if we update the `GetVoxelType` method in the `TerrainGenerator` script!
+But there is 1 problem. We still are stuck with 1 single version of `GetVoxelType`! And we will lose any previous versions of it if we update it... which was kinda of the whole point.
+
+Everything else is separated like layers and voxel types, we just need a way to change the `GetVoxelType` method.
 
 Lets fix this. Edit the `TerrainGenerator` class to be `abstract` and then also mark the `GetVoxelType` method to be abstract (we'll explain what this does in a second):
 
@@ -315,7 +318,7 @@ public abstract class TerrainGenerator : MonoBehaviour
 }
 ```
 
-We have to remove the body of the `GetVoxelType` method, and only the `GetVoxelType(int x, int y, int z)` part of it exists. The code that will actually "implement" it will be another script...
+We have to remove the body of the `GetVoxelType` method, and only the `GetVoxelType(int x, int y, int z);` part of it exists. The code that will actually "implement" it will be another script...
 
 Lets make a new script (that will implement `GetVoxelType`) called `CavesTerrainGenerator` and make it inherit from `TerrainGenerator`:
 
@@ -339,17 +342,24 @@ public class CavesGenerator : TerrainGenerator
 
 As you can see we inherit from `TerrainGenerator` and we `override` its `GetVoxelType` method!
 
-## What just happened??
-If you are a little confused by the above code thats ok.
+## Thats it?
+Yup!
 
-The `TerrainGenerator` class is now "abstract" so it is only allowed to acts like a *template*.
+## Ok so... What just happened??
+If you are a tad confused by the above code thats ok.
 
 ![](/Assets/terrain_generator_code_diagram_abstract.png)
 
-And now we can create endless scripts that inherit from the `TerrainGenerator` abstract class and all we have to do is write the `GetVoxelType` method!
+The `TerrainGenerator` class is now "abstract" so it is only allowed to act like a *template*, and can only be used if another class "inherits" from it.
 
-## Test it out
-Now go back to Unity and remove `TerrainGenerator` from the TerrainGenerator gameObject, and add `CavesGenerator` script instead (the `TerrainGenerator` is now abstract so it cannot live on its own but must live through another class that implements it).
+"inherit" means we get all of its code and variables as if we were a `TerrainGenerator` class... but we get to add our own stuff on top of what `TerrainGenerator` gives us!
+
+The `abstract GetVoxelType` means it has a method that **must be implemented** by its child class. 
+
+All of this combined means we can create endless scripts that inherit from `TerrainGenerator` and all we have to do is write the `GetVoxelType` method!
+
+# Woop de do! Lets test it out
+Now go back to Unity and replace `TerrainGenerator` with the `CavesTerrainGenerator` script by draggin and droppping it into the empty script slot. The `TerrainGenerator` is now abstract so it cannot live on its own but must live through another class that inherits it. If you did this step correctly then all the voxel types and layers should still be there.
 
 ![](/Assets/terrain_generator_caves_generator.png)
 
@@ -357,7 +367,7 @@ Now create the voxel types for Air and Dirt, and create a layer.
 
 Got it? Done? OK!
 
-Before we hit play you need to re-add the `TerrainGenerator` to the Chunk:
+Before we hit play you need to re-add the `CavesTerrainGenerator` to the Chunk:
 
 ![](/Assets/terrain_generator_add_caves_to_chunk.png)
 
@@ -365,15 +375,16 @@ And click play to see our caves!
 
 ![](/Assets/terrain_generator_caves.png)
 
-Pretty cool eh? Go ahead and make a few different terrains!
+Pretty cool eh? Go ahead and make a few different terrains! Start by making a new gameObject named "BeachGenerator" then make a new class that inherits from `TerrainGenerator` (implement `GetVoxelType`) and add it to the BeachGenerator gameObject (add the voxel types and layers)... then drag and drop it into the `TerrainGenerator` slot of the `Chunk` script.
 
-Also, rename the "TerrainGenerator" gameobject to "CavesGenerator" since it has our `CavesGenerator` script attatched to it.
+> Also, rename the "TerrainGenerator" gameobject to "CavesTerrainGenerator" since it has our `CavesTerrainGenerator` script attatched to it.
 
 # Teacher Showcase
-Who said only students could showcase their work?! Not me!
+Who said only students could showcase their work?! Not me.
 
 I created a new `BeachGenerator` script (added it to a new gameobject called `BeachGenerator`) then dragged and dropped it into the "Terrain Generator" slot in the `Chunk` script! And Vuala! Beaches!
 
 ![](/Assets/terrain_generator_beach_generator.png)
 
-(PS: I also added a "rock" texture to the atlas, and created a rock voxel type for the beach terrain)
+(PS: I also added a "rock" texture to the atlas, and created a rock voxel type for the beach terrain. You can skip that step obviously if you want to and just keep the ground all dirt)
+

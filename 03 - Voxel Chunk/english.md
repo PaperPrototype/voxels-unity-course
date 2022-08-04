@@ -81,11 +81,11 @@ Now lets make this chunk! First we need a method that we can use to generate the
 `MeshVoxel` is almost exaclty the same as the previous lecture, with 1 important difference. We create an offset position (in the `offsetPos` variable) from the `x` `y` and `z` parameters given to the method. We then add the `offsetPos` to each quads vertices so that the entire voxel is offsetted.
 
 ```cs
-// we offset each vertex position
-= Tables.Vertices[Tables.QuadVertices[side, 0]] + vertexOffset;
-= Tables.Vertices[Tables.QuadVertices[side, 1]] + vertexOffset;
-= Tables.Vertices[Tables.QuadVertices[side, 2]] + vertexOffset;
-= Tables.Vertices[Tables.QuadVertices[side, 3]] + vertexOffset;
+// we offset each vertex position by the voxels offsetPos
+= Tables.Vertices[Tables.QuadVertices[side, 0]] + offsetPos;
+= Tables.Vertices[Tables.QuadVertices[side, 1]] + offsetPos;
+= Tables.Vertices[Tables.QuadVertices[side, 2]] + offsetPos;
+= Tables.Vertices[Tables.QuadVertices[side, 3]] + offsetPos;
 ```
 
 Lets now use this to build an entire chunk of voxels! 

@@ -5,10 +5,10 @@ If we want to be able to optimize our voxel chunk mesh, we need a way of knowing
 For now we can make a flat terrain by using a simple if statement:
 
 ```
-if y > 12
-	return air;
-else
+if y < 8
 	return dirt;
+else
+	return air;
 ```
 
 Once we get flat terrain working we will transition to using something called "noise" that will give us hills and mountains.
@@ -19,16 +19,16 @@ Open the Chunk.cs script and add the following method under `MeshVoxel`:
 ```cs
     private bool IsSolid(int x, int y, int z)
     {
-        if (y > 8)
+        if (y < 8)
         {
-            return false;
+            return true; // dirt
         }
 
-        return true;
+        return false; // air
     }
 ```
 
-This code says if the voxel y position is greate than 8, then that voxel is an "air" voxel (AKA not solid).
+This code says if the voxel y position is below 8, then that voxel is a solid "dirt" voxel.
 
 In the nested loop in `Start` we can use `IsSolid` to determine if we should mesh a voxel or not:
 
@@ -94,7 +94,7 @@ public static class Tables
 }
 ```
 
-> If Visual Studio is giving you an error that it can't find `Unity.Mathematics` then you need to update the `Visual Studio Editor` package in Unity's package manager. You can find a reddit post about that [here](https://www.reddit.com/r/Unity3D/comments/fvnke9/visual_studio_code_doesnt_recognize/). Essentially in the package manager find the package called "Visual Studio Editor" and click update.
+> If Visual Studio is giving you an error that it can't find `Unity.Mathematics` try restarting Visual Studio (quit and re-open). If that doesn't work then you may need to update the `Visual Studio Editor` package in Unity's package manager. You can find a reddit post about that [here](https://www.reddit.com/r/Unity3D/comments/fvnke9/visual_studio_code_doesnt_recognize/). Essentially in the package manager find the package called "Visual Studio Editor" and click update.
 
 We create a new table called `NeighborOffsets` that will take in the `side` variable from `MeshVoxel`...
 
@@ -309,7 +309,7 @@ Open the Chunk.cs script and add the following:
 	//...
 ```
 
-(PST: you can change the default seed by changing the code to `FastNoiseLite(13123)`, 13123 would be the new seed. I recommend keeping the same seed until you finish this lecture. Once you finish the lecture you can experiment)
+(PS: you can change the default seed by changing the code to `noise = new FastNoiseLite(13123);`, 13123 would be the seed. I recommend keeping the same seed until you finish this lecture, otherwise your terrain may look different than mine! So just wait once you finish the lecture you can experiment)
 
 Now under `IsSolid` add the following method:
 
@@ -408,29 +408,27 @@ Really quickly if you want to make some caves we will need to make a `GetCavesNo
     }
 ```
 
-And now if you want caves you can change `GetVoxelType` to the following:
+And now if you want caves you can change `IsSolid` to the following:
 
 ```cs
-    private VoxelType GetVoxelType(int x, int y, int z)
+    private bool IsSolid(int x, int y, int z)
     {
+         // if outside of the chunk
+        if (x < 0 || x >= ChunkResolution ||
+            y < 0 || y >= ChunkResolution ||
+            z < 0 || z >= ChunkResolution)
+        {
+            return false; // air
+        }
+
         float caves = GetNoiseCaves(5f, x, y, z);
 
-        try
+        if (caves > 0.3)
         {
-            if (caves > 0.3)
-            {
-                return voxelTypes[1]; // dirt
-            }
-
-            return voxelTypes[0]; // air
+            return true; // dirt
         }
-        catch
-        {
-            Debug.LogError("That voxel type does not exist. You are offsetting outside of the voxelTypes array.");
 
-            // give back new VoxelType (will use defaults we set in the VoxelType class)
-            return new VoxelType();
-        }
+        return false; // air
     }
 ```
 
@@ -440,8 +438,33 @@ Which will yield the following:
 
 (the dirt texture looks different because I took this screenshot after I completed the Voxel Types section)
 
-You and also invert the `if` statement to get floating islands!
+You can also invert the `if` statement...
+
+```cs
+        if (caves < 0.3)
+        {
+            return true; // dirt
+        }
+
+        return false; // air
+```
+
+to get floating islands!
 
 ![](/Assets/noise_caves_inverted.png)
 
-I had to add an extra Directional Light to the scene to improve the lighting for that screenshot so don't be disapointed if yours doesnt come out as cool, you just need to add some more lights to your scene. I also set the camera background to solid color (instead of skybox), and set the color to black.
+In those screenshots I increased the ChunkResolution to 32.
+
+I had to add an extra Directional Light to the scene to improve the lighting for that screenshot, if you want the same lighting you just need to add some more directional (AKA sun) lights to your scene.
+
+I also set the camera background to solid black, instead of skybox.
+
+Go ahead and do that now. Find the camera gameObject and update the background to be Solid Color.
+
+![](/Assets/camera_background.png)
+
+And then set the color to be black. We can position the camera to the same position as the scene camera! Select the camera gameObject and click `ctrl` + `shift` + `f` (on mac its `cmd` instead of `ctrl`).
+
+![](/Assets/camera_background_black.png)
+
+much better!
