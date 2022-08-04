@@ -1,11 +1,12 @@
-Well, you've reached the end. Its tie to say our farewells...
+## Well, you've reached the end...
+
+Its time to say our farewells...
 
 Farewell good student. I'll miss you.
 
-# Just kidding
-You get to do one last thing to do before you leave.
+There is one last thing you must do before you leave.
 
-Since you can now create different using the fancy `TerrainGenerator` class, your challenge is to create 2 new terrains and then make a post with screenshots of them (you can also include code if you want to).
+Since you can now create different terrains using the fancy `TerrainGenerator` class, your challenge is to create 2 new terrains and then make a post with screenshots of them (you can also include code if you want to).
 
 You can look at what other students have made in the course's posts (click the post icon next to the chat icon) and get inspiration. Some students even show the code they used for their terrain (feel free to borrow their code and make it your own, I don't believe in plagarism). 
 
