@@ -23,22 +23,21 @@ public class Layer
     public Material material;
     public int atlasSize = 1; // x and y atlas size of texture
 
-    // we add serialize field so we can debug... and feel satisfied :)
-    [SerializeField] private GameObject gameObject;
-    [SerializeField] private MeshFilter meshFilter;
-    [SerializeField] private MeshRenderer meshRenderer;
-    [SerializeField] private MeshCollider meshCollider;
+    private GameObject gameObject;
+    private MeshFilter meshFilter;
+    private MeshRenderer meshRenderer;
+    private MeshCollider meshCollider;
 
-    [SerializeField] private Vector3[] vertices;
-    [SerializeField] private int[] triangles;
-    [SerializeField] private Vector2[] uvs;
+    private Vector3[] vertices;
+    private int[] triangles;
+    private Vector2[] uvs;
 
-    [SerializeField] private int vertexOffset = 0;
-    [SerializeField] private int triangleOffset = 0;
+    private int vertexOffset = 0;
+    private int triangleOffset = 0;
 }
 ```
 
-As you can see we make the Layer class serializable so that we can edit it in the inspector. Everything we need to build a mesh is in this class! There is something we haven't seen before. That is the `MeshCollider` component. If `useCollider` is true then we will apply a mesh collider to our terrain. This way the transparent layer (that will have water) won't have collision, but the terrain voxels can still have collision.
+As you can see we make the Layer class serializable so that we can edit it in the inspector. Everything we need to build a mesh is in this class! There is something we haven't seen before. That is the `MeshCollider` component. If `useCollider` is true then we will apply a mesh collider to our terrain. This way the transparent layer (that will have water) won't have collision, but the solid terrain layer of voxels can still have collision.
 
 Now lets add a layers variable to the Chunk.cs class (as well as remove all uses of the previous the mesh data arrays). Update Chunk.cs to the following:
 
