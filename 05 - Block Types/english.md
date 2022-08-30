@@ -317,3 +317,82 @@ It's very important that you experiment with the above code and get a handle of 
 For the above code to work, we need to add some more voxel types in the inspector, and then we can click play! (See below picture for voxel types)
 
 ![](/Assets/voxel_types.png)
+
+# (BONUS) Side specific texturing
+Currently our voxels have the same texure on each side. In Minecraft you can have a different texture for the sides, bottom, and top.
+
+To accomplish this we will add top and bottom `atlasOffset` variables to our VoxelType.
+
+```cs
+using UnityEngine;
+using System;
+
+[Serializable]
+public class TestVoxelTypeBONUS
+{
+    public string name = "default";
+    public bool isSolid = true;
+
+    [SerializeField]
+    private Vector2 atlasOffsetTop = Vector2.zero;
+    [SerializeField]
+    private Vector2 atlasOffsetSides = Vector2.zero;
+    [SerializeField]
+    private Vector2 atlasOffsetBottom = Vector2.zero;
+
+    // side order
+    // right, left, up, down, front, back
+    public Vector2 GetAtlasOffset(int side)
+    {
+        // top
+        if (side == 2)
+        {
+            // give back atlasOffsetTop and stop here
+            return atlasOffsetTop;
+        }
+        // bottom
+        else if (side == 3)
+        {
+            // give back atlasOffsetBottom and stop here
+            return atlasOffsetBottom;
+        }
+
+        // if above fails then this gets returned
+        return atlasOffsetSides;
+    }
+}
+```
+
+We also make the atlasOffsets private... but also make sure they show up in the inspector. This way we can edit them in the inpector, but not access them in the chunk code. Instead we have a new method called `GetAtlasOffset` which gives us the atlas offset for the side we are looking at.
+
+Now just update the UV code in the `MeshVoxel` method in the Chunk.cs script...
+
+```cs
+private void MeshVoxel(int x, int y, int z)
+{
+    Vector3 offsetPos = new Vector3(x, y, z);
+
+    for (int side = 0; side < 6; side++)
+    {
+        if (!IsNeighborSolid(x, y, z, side))
+        {
+            //...
+
+            // apply offset and add uv corner offsets
+            // then divide by the atlas size to get a smaller section (AKA our sub-texture in the atlas)
+            uvs[vertexOffset + 0] = (voxelType.GetAtlasOffset(side) + new Vector2(0, 0)) / atlasSize;
+            uvs[vertexOffset + 1] = (voxelType.GetAtlasOffset(side) + new Vector2(0, 1)) / atlasSize;
+            uvs[vertexOffset + 2] = (voxelType.GetAtlasOffset(side) + new Vector2(1, 0)) / atlasSize;
+            uvs[vertexOffset + 3] = (voxelType.GetAtlasOffset(side) + new Vector2(1, 1)) / atlasSize;
+
+            //...
+        }
+    }
+}
+```
+
+Now update the atlasOffsets, and you should be able to have grass blocks with dirt on the bottom and sides.
+
+![](/Assets/voxel_types_side_specific_texturing.png)
+
+Feel free to create your own texture atlas with better textures. Mine are very simple.
