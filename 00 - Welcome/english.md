@@ -10,4 +10,4 @@ In Unity Hub make sure to download Unity 2021.3.1f1 or later since that is what 
 
 Make a new Project in Unity Hub and name it "voxels-unity". Thats all the setup I have for you!
 
-And finally if you want to help contribute to this course you can make a pull request to the [voxels-unity-course](https://github.com/PaperPrototype/voxels-unity-course) github repository.
+> if you find a mistake or want to help contribute to this course you can! Just go to the [voxels-unity-course](https://github.com/PaperPrototype/voxels-unity-course) github repository.
