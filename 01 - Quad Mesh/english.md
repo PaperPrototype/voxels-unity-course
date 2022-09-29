@@ -6,9 +6,9 @@ Pixel
 Voxel
 > Volume Element
 
-# Examples
 A voxel is the futuristic version of a pixel. Voxels are essentially 3D pixels. The ultimate game worlds of the future are made out of "voxels". 
 
+# Examples
 [Teardown](https://teardowngame.com/) is a game where everything is "voxels". The voxel system they built is fully destructible.
 
 ![Teardown preview](/Assets/teardown.jpg)
