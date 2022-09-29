@@ -1,4 +1,4 @@
-# Introduction
+# Voxels
 
 Pixel
 > Picture Element
