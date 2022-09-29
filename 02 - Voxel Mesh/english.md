@@ -1,4 +1,4 @@
-# Voxel Mesh
+# Voxel Terrain
 Why go through all the trouble of making a single Quad?!
 
 If our whole world is going to be made out of "voxels", why not just use Unity's builtin cube, and make a million of them?
@@ -15,7 +15,10 @@ You can see that cubes that are not visible to the player are still going to get
 
 By only creating quads where necessary we will get an optimized mesh! And as it turns out, Minecraft does this for its terrain!
 
-For now we will build a voxel using 6 individual quads. Instead of hand coding everything we're going to use "lookup tables".
+# Voxel Mesh
+For now we will build a single voxel using 6 individual quads (in the next section we will build terrain). 
+
+Instead of hand coding each quad for each voxel, we can be smart and store all the possible vertices, and triangle numbers (you could eventually also store the normals). These are called "lookup tables".
 
 Create a new script in the Assets folder called "Tables.cs".
 
