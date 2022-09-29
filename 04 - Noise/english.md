@@ -1,3 +1,4 @@
+# Optimizing Meshes
 If we want to be able to optimize our voxel chunk mesh, we need a way of knowing where a voxel should and shouldn't be.
 
 ![](/Assets/2D_terrain_solid_yes_or_no.png)

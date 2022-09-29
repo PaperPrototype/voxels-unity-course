@@ -150,13 +150,15 @@ Its pink because there is no material on it. Add our Voxel material and it shoul
 
 There is 2 problems currently.
 
-Our chunk seems to be missing half of its voxels!
+First, the chunk seems to be missing half of its voxels! This is because we maxed out the vertices array! (and probably the triangles array as well).
 
-And, our voxels are not optimized. Currently they are creating a quad on all 6 sides even if they don't need to be:
+Second, the voxels are not optimized. Currently voxels are creating a quad on all 6 sides even if they don't need to be:
 
-![](/Assets/2D_voxel_terrain_unoptimized.png)
+![chunk flat unoptimized](/Assets/chunk_flat_unoptimized.png)
 
-We will be optimizing the voxels in the next lecture. For now we can fix the first problem so that all the voxels meshes get created. 
+For now lets fix the first problem so that all the voxels meshes get created. 
+
+> We will be optimizing the voxels in the next lecture.
 
 Currently our mesh has maxed out the number of vertices it can hold. To fix this we have to make a small change to the Chunk.cs script.
 
@@ -186,6 +188,8 @@ public class Chunk : MonoBehaviour
 ```
 
 You'll notice we add `using UnityEngine.Rendering` at the top. This gives us access to `IndexFormat.UInt32` and we set the meshes indexFormat to use a `UInt32`, which lets us have twice as many vertices in our mesh.
+
+The IndexFormat decides how many vertices the GPU can "iterate through" (literally).
 
 After making those changes and click play, the chunk's mesh should now be fixed!
 

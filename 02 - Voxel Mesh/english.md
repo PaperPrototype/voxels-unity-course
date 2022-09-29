@@ -13,12 +13,14 @@ You can see that cubes that are not visible to the player are still going to get
 
 ![2D voxel terrain optimized](/Assets/2D_voxel_terrain_optimized.png)
 
-By only creating quads where necessary we will get an optimized mesh! And as it turns out, Minecraft does this for its terrain!
+By only creating quads where necessary we can prevent speding time rendering triangles that aren't visible, and get an optimized mesh! And as it turns out, this is what exaclty what Minecraft does!
 
 # Voxel Mesh
 For now we will build a single voxel using 6 individual quads (in the next section we will build terrain). 
 
-Instead of hand coding each quad for each voxel, we can be smart and store all the possible vertices, and triangle numbers (you could eventually also store the normals). These are called "lookup tables".
+Instead of hand coding each quad for each voxel, we can be smart and store all the possible vertices and triangle numbers. This is often refered to as creating "lookup tables".
+
+When building the voxel, we can access the vertices and triangles based on the quad for the corresponding side we want to have a mesh on. Obviously we can check for neighboring voxels before deciding what sides of the voxel should have a quad mesh... but thats for the Noise section (where we decide where we want, and don't want voxels to be).
 
 Create a new script in the Assets folder called "Tables.cs".
 
