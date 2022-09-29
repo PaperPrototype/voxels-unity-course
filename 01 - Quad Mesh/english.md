@@ -6,38 +6,46 @@ Pixel
 Voxel
 > Volume Element
 
+# Examples
 A voxel is the futuristic version of a pixel. Voxels are essentially 3D pixels. The ultimate game worlds of the future are made out of "voxels". 
 
-[Teardown](https://teardowngame.com/) is cool example of a game that uses only voxels.
+[Teardown](https://teardowngame.com/) is a game where everything is "voxels". The voxel system they built is fully destructible.
 
-[Minecraft](https://minecraft.net) is one of the most popular voxel games. Although it doesn't really use "voxels" as you'll find out soon.
+![Teardown preview](/Assets/teardown.jpg)
+
+[Minecraft](https://minecraft.net) is one of the most popular voxel games. Although it doesn't really use "voxels" as you'll find out soon (PS: it uses "meshes" to fake it).
+
+![Minecraft preview](/Assets/minecraft.jpg)
 
 In order to have a world made of voxels we have to come up with a way of making the pixels on our screen have a picture that looks like... well voxels... on other words a method of "rasterizing".
 
+# Voxel Rendering
+
 Voxel Rasterizing
-> Using voxel volume data to fill im the pixels on our screen.
+> Using voxel volume data (thik of a 3D pixel image format).
+> Requires a custom renderer to convert the data into pixels on our screen, thus it is much harder to build.
 >
-> Requires a custom renderer.
+> Can utilize Raytracing to speed things up, which I believe Teardown uses.
+
+Triangle "mesh" Rasterizing
+> Get 3 positions in 3D space. draw lines between them to build the edges of a triangle. Now figure out where to fill in the pixels that the triangle takes up on the screen.
 >
-> Can also utilize Raytracing to speed things up.
+> Built into almost all graphics cards, hence it is very fast. This is what minecraft does, and what we will be doing.
 
-Triangle Rasterizing
-> Uses many triangles to build shapes, and then fills in the triangles with colored pixels.
->
-> Built into almost all graphics cards, hence it is very fast.
+To "Rasterize"
+> To take data, and use it to decide where to fill in the pixels on a screen to build an image.
 
-Rasterize
-> To fill in pixels on a screen and set the color.
+The most widely used rendering method for games (by far) is Triangle Rasterization. Most likely your favorite game is made using a triangle based renderer of some sort. 
 
-The most widely used rasterization method (by far) is Triangle Rasterization. Most likely your favorite game is made using a Triangle based renderer of some sort. 
+If you've ever zoomed really close to something in a game, you might have noticed that the object was not as smooth as you thought it was! That is because it was probably made of triangles, or a "mesh" of triangles! 
 
-If you've ever zoomed really close to something in a game, you might have noticed that the object was not as smooth as you thought it was! That is because it was probably made of triangles! 
+On the other hand a Voxel Rasterizer is fundamentally limited in that graphics cards don't have specialized hardware for filling in pixels based on volume data (remember, 3D pixel data) like they do for triangles. Graphics cards literally have a processor just for taking 3 positions on the X and Y on your screen, and filling those in with colored pixels!
 
-On the other hand a Voxel Rasterizer is fundamentally limited in that graphics cards don't have specialized hardware for rasterizing voxels like they do triangles. So we either have to write our own voxel rasterizer/renderer, or make our "voxels" out of triangles and use Unity's default renderer (which is what we will be doing).
+So we either have to write our own voxel rasterizer/renderer that can somehow use what our graphics card gives us (probably some sort of hybrid system that still uses meshes), or make our "voxels" straight out of triangles like minecraft. Unity also has a `Mesh` class and renderer that cna render meshes that is really easy to use.
 
 So triangles it is. Lets start at the beginning and make a single renderable triangle.
 
-## Vertices
+# Vertices
 We group triangles together and call them a mesh. In Unity the only way to render a triangle is to build a "mesh" and put it into a `MeshFilter` component. 
 
 We will start with making a square Mesh using 2 triangles.
@@ -57,7 +65,7 @@ If we make a simple graph and put the vertices from the example code onto it, yo
 
 ![three vertices](/Assets/three_vertices.png)
 
-## Triangles ("connecting" our vertices)
+# Triangles ("connecting" our vertices)
 We have 3 vertices, now how do we tell Unity to render a triangle using those 3 vertices? 
 
 In code, we can literally say get the first vertex, the second one, and the third one, and fill those 3 vertices in to make a triangle.
@@ -78,7 +86,7 @@ The above mesh, if "rendered" by Unity's renderer, would yield a triangle much l
 
 ![triangle mesh](/Assets/triangle_mesh.png)
 
-## Quad
+# Quad
 A "quad" is just the same as a square, but, it lives in 3D space. A "square" is a 2D object that exists only within 2D space; hence we will be using the word Quad.
 
 Currently we have 3 vertices, so to make a Quad we need 1 more vertex in the upper right corner.
@@ -108,7 +116,7 @@ If we rendered the resulting quad mesh it would look like this:
 
 ![quad mesh](/Assets/quad_mesh.png)
 
-## Normals
+# Normals
 In order for the renderer to know which direction the surface of our quad is facing we have to give each vertex a "normal".
 
 A normal is the direction that is "upwards" from our surface (usually at a 90 degree angle).
@@ -142,7 +150,7 @@ Any vector (Vector2 or Vector3) with a magnitude of 1 is called a *unit vector*.
 
 Since normals represent a "direction" they don't really have a "position". Thus, mathematically it would be pretty silly to try to get a position out of them. Instead you would use the vertex of that normal if you wanted to get a position.
 
-## mesh.RecalculateNormals
+# mesh.RecalculateNormals
 Rather than calculating all the normals ourselves we can use Unity's builtin method that generates normals for us.
 
 ```cs
@@ -262,7 +270,7 @@ Now just drag it onto the Quad GameObject. And click play and the Quad should be
 
 If you click on the Quad GameObject then click the `f` key (f stands for "focus"), you should then be able to hold the `option` key and orbit around it using the mouse.
 
-## UV's
+# UV's
 Almost every mesh in a game has a texture.
 
 A texture is just an image. The renderer will take care of 'stretching' the textures onto our triangles, all we have to do is tell it which vertex a specific part of our texture should "map" to. 
@@ -299,7 +307,7 @@ mesh.uv = { Vector2(0, 0), Vector2(0, 1), Vector2(1, 0), Vector2(1, 1) }
 
 ![2D textured quad](/Assets/2D_textured_quad.png)
 
-## Coding the UVs for the Quad
+# Coding the UVs for the Quad
 Open the course menu, and you'll find a resources section. Download the `Texture.png.zip` file into your project, and unzip it.
 
 Now double click the Voxel material and drag and drop the texture onto the albedo property.
