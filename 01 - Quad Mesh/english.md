@@ -17,7 +17,7 @@ A voxel is the futuristic version of a pixel. Voxels are essentially 3D pixels. 
 
 ![Minecraft preview](/Assets/minecraft.jpg)
 
-In order to build a game world made of "voxels" (3D version of a pixel... cubes really) we have to come up with a way of making the pixels on our screen color themselves... in other words a method of "rasterizing".
+In order to build a game world made of "voxels" (3D version of a pixel... cubes really) we have to come up with a way of making the pixels on our screen color themselves as cubes... in computer graphics language, a method of "rasterizing".
 
 # Voxel Rendering
 
