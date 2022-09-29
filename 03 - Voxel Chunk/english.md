@@ -1,3 +1,4 @@
+# Max Mesh Sizes
 If we want to make an entire voxel world using a single mesh, we are going to have a problem. 
 
 Most mobile graphics cards use 16 bit indices (which allow you to have meshes with up to 65k vertices). In order to access a vertex the graphics card has to index into our array of vertices, and with 16 bits you can only count up to 65,535... basically there is a max amount of data a single mesh can handle.
@@ -9,9 +10,9 @@ You may recall Minecrafts "chunk distance" setting that lets you decide how far 
 > at first it seems weird, why not update only that single voxels mesh? First, there is a benefit to storing the mesh data for a bunch of voxels in a single large mesh (render calls). And second, making a system that would do that requires a lot more work, and just re-meshing a chunk is relatively fast and has worked quite well for minecraft.
 > It would be a over-engineered unecessary waste of time to be quite honest.
 
+# The Chunk
 In this course we **won't** be builing a large world with many chunks, but instead will just be focusing on making a single "chunk" of voxels. That way you can nail the basics and in a later course make terrain or a building system that uses multiple chunks.
 
-# Chunk
 Create a new folder in Assets called "Chunk". Create a new Scene and Script called Chunk.
 
 ![](/Assets/project_assets_chunk.png)
