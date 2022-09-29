@@ -1,10 +1,13 @@
 If we want to make an entire voxel world using a single mesh, we are going to have a problem. 
 
-Most mobile graphics cards use 16 bit indices (which allow you to have meshes with up to 65k vertices). In order to access a vertex the graphics card has to index into our array of vertices, and with 16 bits you can only count up to 65,535.
+Most mobile graphics cards use 16 bit indices (which allow you to have meshes with up to 65k vertices). In order to access a vertex the graphics card has to index into our array of vertices, and with 16 bits you can only count up to 65,535... basically there is a max amount of data a single mesh can handle.
 
-So the solution is to split up our world into "chunks" of voxels. Each chunk with however many voxels will give us less than 65,535 vertices.
+So the solution is to split up our world into "chunks" of voxels. Each chunk max size will be determined by however many voxels will give us less than 65,535 vertices.
 
-You may recall Minecrafts "chunk distance" setting that lets you decide how far to load chunks around the player. Well, that is because Minecraft does exaclty what we just came up with! It splits the world up into chunks of blocks, and whenever we edit the terrain, it simply redoes that entire chunks mesh (at first it seems weird, why not update only that single voxels mesh? Well, its because making a system that would do that requires a lot more work, and just recreating an entire chunk's mesh is relatively fast and has worked quite well).
+You may recall Minecrafts "chunk distance" setting that lets you decide how far to load chunks around the player. Well, that is because Minecraft does exactly what we just came up with! It splits the world up into chunks of blocks, and whenever we edit the terrain, it simply re-meshes that chunks mesh
+
+> at first it seems weird, why not update only that single voxels mesh? First, there is a benefit to storing the mesh data for a bunch of voxels in a single large mesh (render calls). And second, making a system that would do that requires a lot more work, and just re-meshing a chunk is relatively fast and has worked quite well for minecraft.
+> It would be a over-engineered unecessary waste of time to be quite honest.
 
 In this course we **won't** be builing a large world with many chunks, but instead will just be focusing on making a single "chunk" of voxels. That way you can nail the basics and in a later course make terrain or a building system that uses multiple chunks.
 
@@ -150,7 +153,7 @@ Its pink because there is no material on it. Add our Voxel material and it shoul
 
 There is 2 problems currently.
 
-First, the chunk seems to be missing half of its voxels! This is because we maxed out the vertices array! (and probably the triangles array as well).
+First, the chunk seems to be missing half of its voxels! This is because we maxed out the vertices array, and probably the triangles array as well (more on this in a second).
 
 Second, the voxels are not optimized. Currently voxels are creating a quad on all 6 sides even if they don't need to be:
 
@@ -189,7 +192,7 @@ public class Chunk : MonoBehaviour
 
 You'll notice we add `using UnityEngine.Rendering` at the top. This gives us access to `IndexFormat.UInt32` and we set the meshes indexFormat to use a `UInt32`, which lets us have twice as many vertices in our mesh.
 
-The IndexFormat decides how many vertices the GPU can "iterate through" (literally).
+The IndexFormat decides how many indices an array of mesh data can have (literally, "Indice" meaning "position in an array" which also happens to limit the number of items we can locate in an array)
 
 After making those changes and click play, the chunk's mesh should now be fixed!
 
