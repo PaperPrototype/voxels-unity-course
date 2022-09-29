@@ -7,9 +7,7 @@ So the solution is to split up our world into "chunks" of voxels. Each chunk max
 
 You may recall Minecrafts "chunk distance" setting that lets you decide how far to load chunks around the player. Well, that is because Minecraft does exactly what we just came up with! It splits the world up into chunks of blocks, and whenever we edit the terrain, it simply re-meshes that chunks mesh
 
-> at first it seems weird, why not update only that single voxels mesh? First, there is a benefit to storing the mesh data for a bunch of voxels in a single large mesh (less render calls). And second, making a system that would do that requires a lot more work, and just re-meshing a chunk is relatively fast and has worked quite well for minecraft.
->
-> It would be a over-engineered unecessary waste of time to be quite honest.
+> At first it seems weird, why not update only that single voxels mesh? Well, here is a benefit to storing the mesh data for a bunch of voxels in a single large mesh. Less render calls. And just re-meshing a chunk is relatively fast and has worked quite well for minecraft.
 
 # The Chunk
 In this course we **won't** be builing a large world with many chunks, but instead will just be focusing on making a single "chunk" of voxels. That way you can nail the basics and in a later course make terrain or a building system that uses multiple chunks.
