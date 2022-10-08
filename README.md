@@ -6,9 +6,9 @@ Abdiel Lopez
 
 Requested
 - Good performance
-  - DONE
+  - DONE (next course C# Job System)
 - Usage of sprites (able to do side specific sprites)
-  - DONE
+  - DONE (next course has this)
 - Multiple layers (transparent voxels)
   - DONE
 - multiple chunks
