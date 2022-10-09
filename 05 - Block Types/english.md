@@ -395,4 +395,4 @@ Now update the atlasOffsets, and you should be able to have grass blocks with di
 
 ![](/Assets/voxel_types_side_specific_texturing.png)
 
-Feel free to create your own texture atlas with better textures. Mine are very simple.
+Feel free to create your own texture atlas with different textures. Mine are very simple.
