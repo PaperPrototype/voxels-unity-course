@@ -310,7 +310,7 @@ Open the Chunk.cs script and add the following:
 	//...
 ```
 
-(PS: you can change the default seed by changing the code to `noise = new FastNoiseLite(13123);`, 13123 would be the seed. I recommend keeping the same seed until you finish this lecture, otherwise your terrain may look different than mine! So just wait once you finish the lecture you can experiment)
+(PS: you can change the default seed `noise = new FastNoiseLite(13123);`. **Wait** until after you finish this section though, or your terrain will look very different from mine!)
 
 Now under `IsSolid` add the following method:
 
