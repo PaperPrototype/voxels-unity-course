@@ -1,14 +1,28 @@
+# Project Setup
+
+In Unity Hub make sure to download Unity 2021.3.1f1 or later since that is what this course will be using.
+
+Make a new Project in Unity Hub and name it "voxels-unity". Thats all the setup I have for you!
+
+> if you find a mistake or want to help contribute to this course you can! Just go to the [voxels-unity-course](https://github.com/PaperPrototype/voxels-unity-course) github repository.
+> You can also find a the full working project from this course here -> [companion project](https://github.com/PaperPrototype/voxels-unity)
+
+Lets do this!
+
 # Voxels
 
 Pixel
+
 > Picture Element
 
 Voxel
+
 > Volume Element
 
-A voxel is the futuristic version of a pixel. Voxels are essentially 3D pixels. The ultimate game worlds of the future are made out of "voxels". 
+A voxel is the futuristic version of a pixel. Voxels are essentially 3D pixels. The ultimate game worlds of the future are made out of "voxels".
 
 # Examples
+
 [Teardown](https://teardowngame.com/) is a game where everything is "voxels". The voxel system they built is fully destructible.
 
 ![Teardown preview](/Assets/teardown.jpg)
@@ -22,22 +36,25 @@ In order to build a game world made of "voxels" (3D version of a pixel... cubes 
 # Voxel Rendering
 
 Voxel Rasterizing
+
 > Using voxel volume data (thik of a 3D pixel image format).
 > Requires a custom renderer to convert the data into pixels on our screen, thus it is much harder to build.
 >
 > Can utilize Raytracing to speed things up, which I believe Teardown uses.
 
 Triangle "mesh" Rasterizing
+
 > Get 3 positions in 3D space. draw lines between them to build the edges of a triangle. Now figure out where to fill in the pixels that the triangle takes up on the screen.
 >
 > Built into almost all graphics cards, hence it is very fast. This is what minecraft does, and what we will be doing.
 
 To "Rasterize"
+
 > To take data, and use it to decide where to fill in the pixels on a screen to build an image.
 
-The most widely used rendering method for games (by far) is Triangle Rasterization. Most likely your favorite game is made using a triangle based renderer of some sort. 
+The most widely used rendering method for games (by far) is Triangle Rasterization. Most likely your favorite game is made using a triangle based renderer of some sort.
 
-If you've ever zoomed really close to something in a game, you might have noticed that the object was not as smooth as you thought it was! That is because it was probably made of triangles, or a "mesh" of triangles! 
+If you've ever zoomed really close to something in a game, you might have noticed that the object was not as smooth as you thought it was! That is because it was probably made of triangles, or a "mesh" of triangles!
 
 On the other hand a Voxel Rasterizer is fundamentally limited in that graphics cards don't have specialized hardware for filling in pixels based on volume data (remember, 3D pixel data) like they do for triangles. Graphics cards literally have a processor just for taking 3 positions on the X and Y on your screen, and filling those in with colored pixels!
 
@@ -46,15 +63,17 @@ So we either have to write our own voxel rasterizer/renderer that can somehow us
 So triangles it is. Lets start at the beginning and make a single renderable triangle.
 
 # Vertices
-We group triangles together and call them a mesh. In Unity the only way to render a triangle is to build a "mesh" and put it into a `MeshFilter` component. 
+
+We group triangles together and call them a mesh. In Unity the only way to render a triangle is to build a "mesh" and put it into a `MeshFilter` component.
 
 We will start with making a square Mesh using 2 triangles.
 
-To make a triangle in 3D space we have to define 3 positions that will become the 3 corners of the triangle. Each position is called a "Vertex" and when talking about meshes these are referred to as "Vertices". Even though this is a weird name, don't forget that they are really just a 3D position.  You may also hear the word "point" used, just remember these words are all referring to the same idea.
+To make a triangle in 3D space we have to define 3 positions that will become the 3 corners of the triangle. Each position is called a "Vertex" and when talking about meshes these are referred to as "Vertices". Even though this is a weird name, don't forget that they are really just a 3D position. You may also hear the word "point" used, just remember these words are all referring to the same idea.
 
 In code vertices for a triangle would look something like this.
 
 (This is example code. No need to create a script in Unity yet.)
+
 ```cs
 mesh.vertices = { Vector3(-1, -1, 0), Vector3(-1, 1, 0), Vector3(1, -1, 0) }
 ```
@@ -66,11 +85,13 @@ If we make a simple graph and put the vertices from the example code onto it, yo
 ![three vertices](/Assets/three_vertices.png)
 
 # Triangles ("connecting" our vertices)
-We have 3 vertices, now how do we tell Unity to render a triangle using those 3 vertices? 
+
+We have 3 vertices, now how do we tell Unity to render a triangle using those 3 vertices?
 
 In code, we can literally say get the first vertex, the second one, and the third one, and fill those 3 vertices in to make a triangle.
 
 (Pseudo code)
+
 ```cs
 mesh.vertices = { Vector3(-1, -1, 0), Vector3(-1, 1, 0), Vector3(1, -1, 0) }
 mesh.triangles = { 0, 1, 2 }
@@ -78,7 +99,7 @@ mesh.triangles = { 0, 1, 2 }
 
 If you look at our code that is exactly what we did! These "triangle" numbers are just indices telling us where in the list we can find 3 vertices (the "first" vertex is at an offset of `0`, since, to access items in a list, we use a offsets).
 
-These "triangle" numbers have to be in sets of 3. So if I had say `0, 1, 2, 1` the last number wouldn't belong to any "triangle". 
+These "triangle" numbers have to be in sets of 3. So if I had say `0, 1, 2, 1` the last number wouldn't belong to any "triangle".
 
 (If did try using 4 numbers Unity would give us an error)
 
@@ -87,6 +108,7 @@ The above mesh, if "rendered" by Unity's renderer, would yield a triangle much l
 ![triangle mesh](/Assets/triangle_mesh.png)
 
 # Quad
+
 A "quad" is just the same as a square, but, it lives in 3D space. A "square" is a 2D object that exists only within 2D space; hence we will be using the word Quad.
 
 Currently we have 3 vertices, so to make a Quad we need 1 more vertex in the upper right corner.
@@ -100,11 +122,11 @@ mesh.vertices = { Vector3(-1, -1, 0), Vector3(-1, 1, 0), Vector3(1, -1, 0), Vect
 Using the new vertex, and reusing 2 of the previous vertices, and adding 3 more numbers to our triangles list, we can make another "triangle".
 
 ```cs
-mesh.vertices = 
-{ 
-	Vector3(-1, -1, 0), 
-	Vector3(-1, 1, 0), 
-	Vector3(1, -1, 0), 
+mesh.vertices =
+{
+	Vector3(-1, -1, 0),
+	Vector3(-1, 1, 0),
+	Vector3(1, -1, 0),
 	Vector3(1, 1, 0), // new vertex
 }
 
@@ -117,6 +139,7 @@ If we rendered the resulting quad mesh it would look like this:
 ![quad mesh](/Assets/quad_mesh.png)
 
 # Normals
+
 In order for the renderer to know which direction the surface of our quad is facing we have to give each vertex a "normal".
 
 A normal is the direction that is "upwards" from our surface (usually at a 90 degree angle).
@@ -144,13 +167,14 @@ One thing I should mention is that normals usually have a "mangitude" of 1.
 
 ![normal magnitude](/Assets/normal_magnitude.png)
 
-This just means that the distance from the start to the end of the `Vector3` should be `1`. 
+This just means that the distance from the start to the end of the `Vector3` should be `1`.
 
-Any vector (Vector2 or Vector3) with a magnitude of 1 is called a *unit vector*. This definition is only useful if you get into deeper vector mathematics, but I'm telling you its meaning in case if you hear someone using the word.
+Any vector (Vector2 or Vector3) with a magnitude of 1 is called a _unit vector_. This definition is only useful if you get into deeper vector mathematics, but I'm telling you its meaning in case if you hear someone using the word.
 
 Since normals represent a "direction" they don't really have a "position". Thus, mathematically it would be pretty silly to try to get a position out of them. Instead you would use the vertex of that normal if you wanted to get a position.
 
 # mesh.RecalculateNormals
+
 Rather than calculating all the normals ourselves we can use Unity's builtin method that generates normals for us.
 
 ```cs
@@ -176,13 +200,14 @@ Clockwise will make the normals face us
 
 ![counter clockwise triangle](/Assets/counter_clockwise_triangle.png)
 
-When a triangles normals are facing away from us, that side of the triangle doesn't get rendered. This is called "backface culling". 
+When a triangles normals are facing away from us, that side of the triangle doesn't get rendered. This is called "backface culling".
 
-Backface culling makes it so that only 1 side of a triangle gets rendered. Triangles with normals that face away from the player won't usually be seen (unless the game has mirrors in it), so the renderer only renders triangles whose normals *are* facing the player, thus reducing the number of triangles that have to be rendered, and giving you better performance. Most modern renderers have backface culling. 
+Backface culling makes it so that only 1 side of a triangle gets rendered. Triangles with normals that face away from the player won't usually be seen (unless the game has mirrors in it), so the renderer only renders triangles whose normals _are_ facing the player, thus reducing the number of triangles that have to be rendered, and giving you better performance. Most modern renderers have backface culling.
 
 Blender does not have backface culling on by default, so you can see both sides of the meshes while modeling in blender.
 
 # Making the Quad
+
 In our voxel project in Unity make a new Folder called "Quad". Then create a new Scene and Script both called "Quad".
 
 ![project assets quad](/Assets/project_assets_quad.png)
@@ -271,9 +296,10 @@ Now just drag it onto the Quad GameObject. And click play and the Quad should be
 If you click on the Quad GameObject then click the `f` key (f stands for "focus"), you should then be able to hold the `option` key and orbit around it using the mouse.
 
 # UV's
+
 Almost every mesh in a game has a texture.
 
-A texture is just an image. The renderer will take care of 'stretching' the textures onto our triangles, all we have to do is tell it which vertex a specific part of our texture should "map" to. 
+A texture is just an image. The renderer will take care of 'stretching' the textures onto our triangles, all we have to do is tell it which vertex a specific part of our texture should "map" to.
 
 A texture "UV size" in Unity is always in the range of 0 to 1, regardless of the texture's actual size in pixels.
 
@@ -308,6 +334,7 @@ mesh.uv = { Vector2(0, 0), Vector2(0, 1), Vector2(1, 0), Vector2(1, 1) }
 ![2D textured quad](/Assets/2D_textured_quad.png)
 
 # Coding the UVs for the Quad
+
 Open the course menu, and you'll find a resources section. Download the `Texture.png.zip` file into your project, and unzip it.
 
 Now double click the Voxel material and drag and drop the texture onto the albedo property.
