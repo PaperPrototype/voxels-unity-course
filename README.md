@@ -2,9 +2,9 @@
 
 - [x] Basics of Mesh Generation
 - [x] Basic UV Texturing
-- [x] Basic Voxel Mesh
-- [x] Minecraft Block Types System (with support for Transparent blocks)
-- [x] Basic Perlin Noise Algorithms for Minecraft Terrain
+- [x] Basic Voxel Meshing
+- [x] Minecraft Block Types (with support for Transparent blocks)
+- [x] Basic Perlin Noise for Minecraft Terrain
 
 # Welcome to the voxels course!
 
