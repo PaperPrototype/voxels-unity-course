@@ -8,7 +8,7 @@
 
 # Welcome to the voxels course!
 
-In this course, you will create a detailed Minecraft single-biome Chunk complete with realistic-looking terrain and water features. By the end of the course, you will understand the fundamentals of mesh generation UV texturing, and voxel modeling that will allow you to create any Minecraft terrain imaginable.
+In this course, you will create a detailed single-biome Minecraft Chunk complete with realistic-looking terrain and water features. By the end of the course, you will understand the fundamentals of mesh generation UV texturing, and voxel modeling that will allow you to create any Minecraft terrain imaginable.
 
 ![](/Assets/terrain_generator_beach.png)
 
