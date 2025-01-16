@@ -6,6 +6,8 @@
 - [x] Minecraft Block Types (with support for Transparent blocks)
 - [x] Basic Perlin Noise for Minecraft Terrain
 
+Full working Unity Project [https://github.com/PaperPrototype/voxels-unity](https://github.com/PaperPrototype/voxels-unity)
+
 # Welcome to the voxels course!
 
 In this course, you will create a detailed single-biome Minecraft Chunk complete with realistic-looking terrain and water features. By the end of the course, you will understand the fundamentals of mesh generation UV texturing, and voxel modeling that will allow you to create any Minecraft terrain imaginable.
