@@ -1,4 +1,5 @@
 # Voxel Terrain
+
 Why go through all the trouble of making a single Quad?!
 
 If our whole world is going to be made out of "voxels", why not just use Unity's builtin cube, and make a million of them?
@@ -16,7 +17,8 @@ You can see that cubes that are not visible to the player are still going to get
 By only creating quads where necessary we can prevent speding time rendering triangles that aren't visible, and get an optimized mesh! And as it turns out, this is what exaclty what Minecraft does!
 
 # Voxel Mesh
-For now we will build a single voxel using 6 individual quads (in the next section we will build terrain). 
+
+For now we will build a single voxel using 6 individual quads (in the next section we will build terrain).
 
 Instead of hand coding each quad for each voxel, we can be smart and store all the possible vertices and triangle numbers. This is often refered to as creating "lookup tables".
 
@@ -124,6 +126,7 @@ We first create a variable called `quadsNum` that tells us how many quads to dra
 We then create 2 arrays. The first being called `vertices`, and it will hold the number of vertices needed to make a voxel (which is 4 vertices per quad times 6 sides of a voxel). The second array, called `triangles`, will hold the number of triangles needed for the mesh of a single voxel and it is 6 triangle numbers per quad times the number of quads.
 
 ## Vertices
+
 Now remove the `TODO` comment and replace it with the following code.
 
 ```cs
@@ -152,7 +155,7 @@ QuadVertices {
 	{4, 7, 0, 3},
 
 	{3, 7, 2, 6},
-	{1, 5, 0, 4}, 
+	{1, 5, 0, 4},
 
 	{5, 6, 4, 7},
 	{0, 3, 1, 2},
@@ -177,7 +180,7 @@ QuadVertices {
 	{4, 7, 0, 3},
 
 	{3, 7, 2, 6},
-	{1, 5, 0, 4}, 
+	{1, 5, 0, 4},
 
 	{5, 6, 4, 7},
 	{0, 3, 1, 2},
@@ -218,6 +221,7 @@ We do this process 6 times, once for each quad:
 ```
 
 ## Triangles
+
 The triangles are easy, since all the quads have been set up to use the exact same triangle numbers.
 
 Replace `TODO triangles` with the following code.
@@ -242,7 +246,6 @@ Now can click play and you should see a pink voxel being rendered!
 
 We offset into the triangles array using the `triangleOffset`:
 
-
 ```cs
 			triangles[triangleOffset + 0] =
             triangles[triangleOffset + 1] =
@@ -264,6 +267,7 @@ We offset into the triangles array using the `triangleOffset`:
 ```
 
 ## Explaining the rest
+
 For reference the code in `Start` should now look like the following:
 
 ```cs
@@ -329,6 +333,7 @@ We create a new mesh as usual, and then set its vertices and triangles to our `v
 We then use the builtin `RecalculateNormals` method, as well as the `RecalculateBounds` method. We haven't seen `RecalculateBounds` before, but it lets the renderer know what area in 3D space the mesh is taking up, so it can do shadows and other rendering stuff correctly.
 
 ## UV's
+
 The UV's are pretty straight forward.
 
 Edit the code in Start to the following:
